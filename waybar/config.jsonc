@@ -288,9 +288,9 @@
         "menu-file": "$HOME/.config/waybar/power_menu.xml",
         "menu-actions": {
             "shutdown": "hyprshutdown -t 'Shutting down...' -p 'shutdown -P 0'",
-            "reboot":   "reboot",
+            "reboot":   "hyprshutdown -t 'Rebooting...' -p 'reboot'",
             "suspend":  "systemctl suspend",
-            "logout":   "uwsm stop"
+            "logout":   "hyprshutdown -t 'Logging out...' - p 'uwsm stop'"
         }
     }
 }

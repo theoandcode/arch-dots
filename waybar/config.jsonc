@@ -1,0 +1,296 @@
+// -*- mode: jsonc -*-
+// Icon key (Font Awesome 7 Free Solid, all \uXXXX escaped):
+//   \uf017 clock      \uf120 terminal   \uf269 firefox    \uf2d0 window-max
+//   \uf001 music      \uf04b play       \uf04c pause       \uf186 moon (idle)
+//   \uf185 sun        \uf028 vol-up     \uf6a9 vol-mute   \uf025 headphones
+//   \uf130 mic        \uf1eb wifi       \uf796 ethernet    \uf0e7 bolt (perf)
+//   \uf06c leaf       \uf2db cpu        \uf538 memory      \uf2c9 therm
+//   \uf011 power-off  \uf021 reboot     \uf186 suspend     \uf2f5 logout
+//
+// Font strategy: icons are wrapped in Pango <span font_family="Font Awesome 7 Free"
+//   font_weight="bold"> so they are rendered with FA7 Solid regardless of the
+//   global font-family setting. Text portions use the default (Noto Sans).
+{
+    "position": "top",
+    "height": 26,
+    "spacing": 0,
+    "margin-top": 6,
+    "margin-left": 10,
+    "margin-right": 10,
+    "margin-bottom": 0,
+
+    "modules-left": [
+        "group/nav",
+        "group/media"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "group/audio",
+        "group/networkinfo",
+        "group/system",
+        "group/tray-power"
+    ],
+
+    // ── Left ──────────────────────────────────────────────────────────────
+
+    "group/nav": {
+        "orientation": "horizontal",
+        "modules": [
+            "hyprland/workspaces",
+            "hyprland/window"
+        ]
+    },
+
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "active-only": false,
+        "all-outputs": false,
+        "show-special": false,
+        "persistent-workspaces": {}
+    },
+
+    "hyprland/window": {
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf2d0</span>  {title}",
+        "max-length": 60,
+        "separate-outputs": true,
+        "rewrite": {
+            "(.*) \u2014 Mozilla Firefox": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf269</span>  $1",
+            "(.*) - fish":                "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf120</span>  $1",
+            "(.*) - zsh":                 "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf120</span>  $1",
+            "(.*) - bash":                "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf120</span>  $1",
+            "(.*) - nvim":                "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf121</span>  $1",
+            "(.*) - Neovim":              "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf121</span>  $1"
+        }
+    },
+
+    "group/media": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/prev",
+            "custom/playpause",
+            "custom/next",
+            "custom/playerctl",
+            "mpd"
+        ]
+    },
+
+    // ── Center ────────────────────────────────────────────────────────────
+
+    "clock": {
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf017</span>  {:%H:%M}",
+        "format-alt": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf073</span>  {:%a, %d %b %Y - %H:%M}",
+        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "left",
+            "on-scroll": 1,
+            "format": {
+                "months":   "<span color='#cdd6f4'><b>{}</b></span>",
+                "days":     "<span color='#a6adc8'>{}</span>",
+                "weeks":    "<span color='#6c7086'>W{}</span>",
+                "weekdays": "<span color='#89b4fa'><b>{}</b></span>",
+                "today":    "<span color='#f38ba8'><b><u>{}</u></b></span>"
+            }
+        }
+    },
+
+    // ── Right: semantic groups ─────────────────────────────────────────────
+
+    "group/audio": {
+        "orientation": "horizontal",
+        "modules": [
+            "pulseaudio"
+        ]
+    },
+
+    "group/networkinfo": {
+        "orientation": "horizontal",
+        "modules": [
+            "network"
+        ]
+    },
+
+    "group/system": {
+        "orientation": "horizontal",
+        "modules": [
+            "idle_inhibitor",
+            "power-profiles-daemon",
+            "cpu",
+            "memory",
+            "temperature"
+        ]
+    },
+
+    "group/tray-power": {
+        "orientation": "horizontal",
+        "modules": [
+            "tray",
+            "custom/power"
+        ]
+    },
+
+    // ── Module configs ─────────────────────────────────────────────────────
+
+    "custom/playerctl": {
+        "exec": "$HOME/.config/waybar/playerctl.sh",
+        "return-type": "json",
+        "interval": 2,
+        "max-length": 40,
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>{icon}</span>{text}",
+        "format-icons": {
+            "Playing": "",
+            "Paused":  "",
+            "Stopped": "\uf001"
+        },
+        "on-scroll-up":   "playerctl --player=plasma-browser-integration,%any next",
+        "on-scroll-down": "playerctl --player=plasma-browser-integration,%any previous"
+    },
+
+    "custom/playpause": {
+        "exec-if": "playerctl --player=plasma-browser-integration,%any status 2>/dev/null | grep -qE 'Playing|Paused'",
+        "exec": "playerctl --player=plasma-browser-integration,%any status 2>/dev/null | grep -q Playing && echo '{\"alt\":\"Playing\"}' || echo '{\"alt\":\"Paused\"}'",
+        "return-type": "json",
+        "interval": 2,
+        "exec-on-event": true,
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>{icon}</span>",
+        "format-icons": {
+            "Playing": "\uf04b",
+            "Paused":  "\uf04c"
+        },
+        "on-click": "playerctl --player=plasma-browser-integration,%any play-pause",
+        "tooltip": false
+    },
+
+    "custom/prev": {
+        "exec-if": "playerctl --player=plasma-browser-integration,%any status 2>/dev/null | grep -qE 'Playing|Paused'",
+        "exec": "echo '{}'",
+        "return-type": "json",
+        "interval": 2,
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf04a</span>",
+        "on-click": "playerctl --player=plasma-browser-integration,%any previous",
+        "tooltip": false
+    },
+
+    "custom/next": {
+        "exec-if": "playerctl --player=plasma-browser-integration,%any status 2>/dev/null | grep -qE 'Playing|Paused'",
+        "exec": "echo '{}'",
+        "return-type": "json",
+        "interval": 2,
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf04e</span>",
+        "on-click": "playerctl --player=plasma-browser-integration,%any next",
+        "tooltip": false
+    },
+
+    "mpd": {
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>{stateIcon}</span> {artist} \u2013 {title}",
+        "format-disconnected": "",
+        "format-stopped": "",
+        "max-length": 35,
+        "interval": 5,
+        "state-icons": {
+            "paused":  "\uf04c",
+            "playing": "\uf04b"
+        },
+        "consume-icons": { "on": "\uf2f1 " },
+        "random-icons":  { "off": "", "on": "\uf074 " },
+        "repeat-icons":  { "on": "\uf079 " },
+        "single-icons":  { "on": "1 " },
+        "tooltip-format": "{artist} \u2013 {album}\n{title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
+        "tooltip-format-disconnected": "MPD disconnected",
+        "on-click": "mpc toggle"
+    },
+
+    "idle_inhibitor": {
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>{icon}</span>",
+        "format-icons": {
+            "activated":   "\uf185",
+            "deactivated": "\uf186"
+        },
+        "tooltip-format-activated":   "Idle inhibitor: ON",
+        "tooltip-format-deactivated": "Idle inhibitor: OFF"
+    },
+
+    "pulseaudio": {
+        "scroll-step": 2,
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>{icon}</span>  {volume}%{format_source}",
+        "format-bluetooth":       "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf294  {icon}</span>  {volume}%{format_source}",
+        "format-bluetooth-muted": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf294  \uf6a9</span>  {format_source}",
+        "format-muted":           "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf6a9</span>  {format_source}",
+        "format-source":          "  <span font_family='Font Awesome 7 Free' font_weight='bold'>\uf130</span>  {volume}%",
+        "format-source-muted":    "",
+        "format-icons": {
+            "headphone":  "\uf025",
+            "hands-free": "\uf590",
+            "headset":    "\uf590",
+            "phone":      "\uf095",
+            "portable":   "\uf287",
+            "car":        "\uf1b9",
+            "default":    ["\uf026", "\uf027", "\uf028"]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "network": {
+        "format-wifi":         "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf1eb</span>  {essid} {signalStrength}%",
+        "format-ethernet":     "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf796</span>  {ipaddr}",
+        "format-linked":       "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf796</span>  {ifname} (no IP)",
+        "format-disconnected": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf071</span>  Offline",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip-format": "{ifname} via {gwaddr}\n{ipaddr}/{cidr}"
+    },
+
+    "power-profiles-daemon": {
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>{icon}</span>",
+        "tooltip-format": "Profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default":     "\uf0e7",
+            "performance": "\uf0e7",
+            "balanced":    "\uf2db",
+            "power-saver": "\uf06c"
+        }
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf2db</span>  {usage}%",
+        "tooltip": true,
+        "tooltip-format": "CPU: {usage}%  |  Load: {load}"
+    },
+
+    "memory": {
+        "interval": 10,
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf538</span>  {percentage}%",
+        "tooltip-format": "RAM: {used:0.1f}G / {total:0.1f}G"
+    },
+
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>{icon}</span>  {temperatureC}\u00b0C",
+        "format-critical": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf2c9</span>  {temperatureC}\u00b0C",
+        "format-icons": ["\uf2cb", "\uf2ca", "\uf2c9"],
+        "tooltip": false
+    },
+
+    "tray": {
+        "spacing": 8,
+        "show-passive-items": true
+    },
+
+    "custom/power": {
+        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf011</span>",
+        "tooltip": false,
+        "menu": "on-click",
+        "menu-file": "$HOME/.config/waybar/power_menu.xml",
+        "menu-actions": {
+            "shutdown": "hyprshutdown -t 'Shutting down...' -p 'shutdown -P 0'",
+            "reboot":   "reboot",
+            "suspend":  "systemctl suspend",
+            "logout":   "uwsm stop"
+        }
+    }
+}

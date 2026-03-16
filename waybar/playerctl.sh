@@ -2,7 +2,6 @@
 # Waybar custom/playerctl module — polled, no --follow
 # Emits idle placeholder when no player is active.
 
-
 STATUS=$(playerctl status 2>/dev/null)
 
 if [[ -z "$STATUS" || "$STATUS" == "Stopped" ]]; then

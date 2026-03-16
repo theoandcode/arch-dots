@@ -75,7 +75,6 @@
             "custom/playpause",
             "custom/next",
             "custom/playerctl",
-            "mpd"
         ]
     },
 
@@ -190,25 +189,6 @@
         "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf04e</span>",
         "on-click": "playerctl --player=plasma-browser-integration,%any next",
         "tooltip": false
-    },
-
-    "mpd": {
-        "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>{stateIcon}</span> {artist} \u2013 {title}",
-        "format-disconnected": "",
-        "format-stopped": "",
-        "max-length": 35,
-        "interval": 5,
-        "state-icons": {
-            "paused":  "\uf04c",
-            "playing": "\uf04b"
-        },
-        "consume-icons": { "on": "\uf2f1 " },
-        "random-icons":  { "off": "", "on": "\uf074 " },
-        "repeat-icons":  { "on": "\uf079 " },
-        "single-icons":  { "on": "1 " },
-        "tooltip-format": "{artist} \u2013 {album}\n{title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
-        "tooltip-format-disconnected": "MPD disconnected",
-        "on-click": "mpc toggle"
     },
 
     "idle_inhibitor": {

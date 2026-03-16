@@ -187,23 +187,6 @@ window#waybar.hidden {
     color: #313244;
 }
 
-/* ── MPD ─────────────────────────────────────────────────── */
-#mpd {
-    color: #94e2d5;
-    padding: 0 0 0 8px;
-}
-
-#mpd.disconnected,
-#mpd.stopped {
-    padding: 0;
-    min-width: 0;
-    color: #45475a;
-}
-
-#mpd.paused {
-    color: #6c7086;
-}
-
 /* ── Idle inhibitor ──────────────────────────────────────── */
 #idle_inhibitor {
     color: #6c7086;

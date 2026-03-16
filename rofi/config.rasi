@@ -1,5 +1,9 @@
+// vim: set ts=4 sw=4 noexpandtab:
 configuration {
-	modes: "window,drun,run,ssh";
+	modes: "window,drun,run,ssh,filebrowser,calc,combi";
+	calc {
+		calc-command: "wl-copy {result}";
+	}
 /*	font: "mono 12";*/
 /*	location: 0;*/
 /*	yoffset: 0;*/

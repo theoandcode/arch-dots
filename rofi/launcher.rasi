@@ -12,11 +12,14 @@
 
 // General Configurations
 configuration {
-    modi: "drun,window,filebrowser,run";
-    display-drun: "APPS";
+    modi: "combi,calc,filebrowser,run";
+    combi-modi: "drun,window";
+    display-combi: "APPS";
+    display-calc: "CALCULATOR";
     display-run: "RUN";
     display-filebrowser: "FILES";
-    display-window: "WINDOW";
+    display-drun: "App";
+    display-window: "Window";
     drun-display-format: "{name}";
     window-format: "{w} · {c} · {t}";
     case-sensitive: false;
@@ -101,7 +104,7 @@ mainbox {
     background-color:            transparent;
     border-radius:               12px;
     orientation:                 vertical;
-    children:                    [ "top-container", "listview" ];
+    children:                    [ "top-container", "message", "listview" ];
 }
 
 // Top container - Input bar and tabs in horizontal layout
@@ -239,8 +242,8 @@ message {
     border:                      0px solid;
 }
 textbox {
-    padding:                     10px;
-    border-radius:               12px;
+    padding:                     20px;
+    border-radius:               0px;
     background-color:            @background-color-elements;
     text-color:                  @text-color;
     vertical-align:              0.5;

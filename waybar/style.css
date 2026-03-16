@@ -35,8 +35,9 @@ window#waybar.hidden {
 
 /* ── Shared pill background ──────────────────────────────── */
 #nav,
-.modules-center,
 #media,
+.modules-center,
+#screenshot,
 #audio,
 #networkinfo,
 #system,
@@ -65,6 +66,11 @@ window#waybar.hidden {
 }
 
 /* ── Right sub-group pills ───────────────────────────────── */
+#screenshot {
+    padding: 0 14px;
+    margin: 0 10px;
+}
+
 #audio {
     padding: 0 14px;
     margin: 0 10px;

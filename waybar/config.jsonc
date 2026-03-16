@@ -27,6 +27,7 @@
         "clock"
     ],
     "modules-right": [
+        "group/screenshot",
         "group/audio",
         "group/networkinfo",
         "group/system",
@@ -99,6 +100,12 @@
     },
 
     // ── Right: semantic groups ─────────────────────────────────────────────
+    "group/screenshot": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/hyprshot"
+        ]
+    },
 
     "group/audio": {
         "orientation": "horizontal",
@@ -292,5 +299,14 @@
             "suspend":  "systemctl suspend",
             "logout":   "hyprshutdown -t 'Logging out...' - p 'uwsm stop'"
         }
+    },
+
+    "custom/hyprshot": {
+            "format": "\uf030",
+            "on-click": "hyprshot -m region",
+            "on-click-right": "hyprshot -m window",
+            "on-click-middle": "hyprshot -m output",
+            "tooltip": true,
+            "tooltip-format": "Left: Region, Right: Window, Middle: Output"
     }
 }

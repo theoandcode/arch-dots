@@ -152,13 +152,13 @@
             "Paused":  "",
             "Stopped": "\uf001"
         },
-        "on-scroll-up":   "playerctl --player=plasma-browser-integration,%any next",
-        "on-scroll-down": "playerctl --player=plasma-browser-integration,%any previous"
+        "on-scroll-up":   "playerctl next",
+        "on-scroll-down": "playerctl previous"
     },
 
     "custom/playpause": {
-        "exec-if": "playerctl --player=plasma-browser-integration,%any status 2>/dev/null | grep -qE 'Playing|Paused'",
-        "exec": "playerctl --player=plasma-browser-integration,%any status 2>/dev/null | grep -q Playing && echo '{\"alt\":\"Playing\"}' || echo '{\"alt\":\"Paused\"}'",
+        "exec-if": "playerctl status 2>/dev/null | grep -qE 'Playing|Paused'",
+        "exec": "playerctl status 2>/dev/null | grep -q Playing && echo '{\"alt\":\"Playing\"}' || echo '{\"alt\":\"Paused\"}'",
         "return-type": "json",
         "interval": 2,
         "exec-on-event": true,
@@ -167,27 +167,27 @@
             "Playing": "\uf04c",
             "Paused":  "\uf04b"
         },
-        "on-click": "playerctl --player=plasma-browser-integration,%any play-pause",
+        "on-click": "playerctl play-pause",
         "tooltip": false
     },
 
     "custom/prev": {
-        "exec-if": "playerctl --player=plasma-browser-integration,%any status 2>/dev/null | grep -qE 'Playing|Paused'",
+        "exec-if": "playerctl status 2>/dev/null | grep -qE 'Playing|Paused'",
         "exec": "echo '{}'",
         "return-type": "json",
         "interval": 2,
         "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf04a</span>",
-        "on-click": "playerctl --player=plasma-browser-integration,%any previous",
+        "on-click": "playerctl previous",
         "tooltip": false
     },
 
     "custom/next": {
-        "exec-if": "playerctl --player=plasma-browser-integration,%any status 2>/dev/null | grep -qE 'Playing|Paused'",
+        "exec-if": "playerctl status 2>/dev/null | grep -qE 'Playing|Paused'",
         "exec": "echo '{}'",
         "return-type": "json",
         "interval": 2,
         "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>\uf04e</span>",
-        "on-click": "playerctl --player=plasma-browser-integration,%any next",
+        "on-click": "playerctl next",
         "tooltip": false
     },
 

@@ -68,6 +68,7 @@ window#waybar.hidden {
 #screenshot {
     padding: 0 14px;
     margin: 0 10px;
+    color: #a6adc8;
 }
 
 #audio {

@@ -165,8 +165,8 @@
         "exec-on-event": true,
         "format": "<span font_family='Font Awesome 7 Free' font_weight='bold'>{icon}</span>",
         "format-icons": {
-            "Playing": "\uf04b",
-            "Paused":  "\uf04c"
+            "Playing": "\uf04c",
+            "Paused":  "\uf04b"
         },
         "on-click": "playerctl --player=plasma-browser-integration,%any play-pause",
         "tooltip": false

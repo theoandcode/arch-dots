@@ -274,10 +274,10 @@
         "menu": "on-click",
         "menu-file": "$HOME/.config/waybar/power_menu.xml",
         "menu-actions": {
-            "shutdown": "hyprshutdown -t 'Shutting down...' -p 'shutdown -P 0'",
-            "reboot":   "hyprshutdown -t 'Rebooting...' -p 'reboot'",
+            "shutdown": "uwsm app -- hyprshutdown -t 'Shutting down...' -p 'shutdown -P 0'",
+            "reboot":   "uwsm app -- hyprshutdown -t 'Rebooting...' -p 'reboot'",
             "suspend":  "systemctl suspend",
-            "logout":   "hyprshutdown"
+            "logout":   "uwsm app -- hyprshutdown"
         }
     },
 

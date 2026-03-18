@@ -18,8 +18,8 @@ configuration {
     display-calc: "CALCULATOR";
     display-run: "RUN";
     display-filebrowser: "FILES";
-    display-drun: "App";
-    display-window: "Window";
+    display-drun: "";
+    display-window: "";
     drun-display-format: "{name}";
     window-format: "{w} · {c} · {t}";
     case-sensitive: false;

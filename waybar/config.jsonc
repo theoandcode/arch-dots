@@ -218,7 +218,7 @@
             "car":        "\uf1b9",
             "default":    ["\uf026", "\uf027", "\uf028"]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol -t 3" // Open the "Output Devices" tab in pavucontrol
     },
 
     "network": {
@@ -277,7 +277,7 @@
             "shutdown": "hyprshutdown -t 'Shutting down...' -p 'shutdown -P 0'",
             "reboot":   "hyprshutdown -t 'Rebooting...' -p 'reboot'",
             "suspend":  "systemctl suspend",
-            "logout":   "hyprshutdown -t 'Logging out...' - p 'uwsm stop'"
+            "logout":   "hyprshutdown"
         }
     },
 

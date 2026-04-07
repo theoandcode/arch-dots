@@ -4,7 +4,7 @@ configuration {
 	calc {
 		calc-command: "wl-copy {result}";
 	}
-/*	font: "mono 12";*/
+	font: "JetBrainsMono Nerd Font 12";
 /*	location: 0;*/
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/

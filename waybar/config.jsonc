@@ -282,7 +282,7 @@
     },
 
     "custom/hyprshot": {
-            "format": "\uf030",
+            "format": "<span font_family='font Awesome 7 Free' font_weight='bold'>\uf030</span>",
             "on-click": "hyprshot -m region",
             "on-click-right": "hyprshot -m window",
             "on-click-middle": "hyprshot -m output",
